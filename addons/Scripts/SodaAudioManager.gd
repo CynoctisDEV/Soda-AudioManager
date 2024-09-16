@@ -21,6 +21,7 @@ var lastAmbient: String
 @export var sndAmbient: AudioStreamPlayer
 
 # ---------- GODOT FUNC ----------
+func _process(delta: float) -> void:
 	#Here, it is defined that the volume of the nodes that play the audio will have the same value
 	#as the declared volume variables, so by changing these variables, the volume of the respective
 	#sounds will also change.
