@@ -4,7 +4,7 @@ extends EditorPlugin
 
 # This is autoload propreties for plugin.
 const AUTOLOAD_NAME = "SodaAudioManager"
-const  AUTOLOAD_PATH = "res://addons/soda_audio_manager/Scenes/soda_audio_manager.scn"
+const  AUTOLOAD_PATH = "res://addons/SodaAudioManager/Scenes/soda_audio_manager.scn"
 
 # ----------------------------------------------------------------------------------------- 
 func _enter_tree():
