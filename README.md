@@ -59,7 +59,7 @@ SodaAudioManager.stop_ambient_sound()
 ```
 SodaAudioManager.play_snd_interface(sndPath)
 ```
-	+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
+- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
 	
 #### Player SFX
  ```
