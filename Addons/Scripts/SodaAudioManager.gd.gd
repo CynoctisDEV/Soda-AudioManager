@@ -1,4 +1,4 @@
-#---------- Soda Audio Manager ver 1.0 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
+#---------- Soda Audio Manager ver 0.5 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
 extends Node
 
 # ----------- DECLARATIONS -----------
@@ -91,4 +91,4 @@ func _on_snd_ambient_finished() -> void:
 	else:
 		pass
 
-#---------- Soda Audio Manager ver 1.0 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
+#---------- Soda Audio Manager ver 0.5 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
