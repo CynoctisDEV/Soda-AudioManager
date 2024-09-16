@@ -10,6 +10,7 @@ export_presets.cfg
 *.translation
 
 #images
+repo image.png
 iconSodaAudioManager.png
 
 # Mono-specific ignores
