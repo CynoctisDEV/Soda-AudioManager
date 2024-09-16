@@ -22,34 +22,50 @@
 **To use the plugin, call the functions in your code whenever you need to play, stop, or pause an audio.**
 
 #### Music functions:
-- ```SodaAudioManager.play_music(sndPath, isLoop) ```
-	+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-	+ ***isLoop*** defines whether the music will play in a loop or not; use true or false.
+```
+SodaAudioManager.play_music(sndPath, isLoop)
+```
+- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
+- ***isLoop*** defines whether the music will play in a loop or not; use true or false.
 
-- ```SodaAudioManager.pause_music()```
-	+ Pauses the music that is currently playing.
+```
+SodaAudioManager.pause_music()
+```
+-Pauses the music that is currently playing.
 
-- ```SodaAudioManager.unpause_music()```
-	+ Resumes the music that was playing and was paused earlier.
+```
+SodaAudioManager.unpause_music()
+```
+- Resumes the music that was playing and was paused earlier.
 
-- ```SodaAudioManager.stop_music()```
-	+ Stop music that is currently playing.
+```
+SodaAudioManager.stop_music()
+```
+- Stop music that is currently playing.
 	
 #### Ambient Sound Functions
-- ```SodaAudioManager.play_ambient_sound(sndPath, isLoop)```
-	+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-	+ ***isLoop*** defines whether the music will play in a loop or not; use true or false.
+```
+SodaAudioManager.play_ambient_sound(sndPath, isLoop)
+```
+- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
+- ***isLoop*** defines whether the music will play in a loop or not; use true or false.
 	
-- ```SodaAudioManager.stop_ambient_sound()```
-	+ Stop Ambient audio that is currently playing.
+```
+SodaAudioManager.stop_ambient_sound()
+```
+- Stop Ambient audio that is currently playing.
 
 #### Interface SFX
-- ```SodaAudioManager.play_snd_interface(sndPath)```
+```
+SodaAudioManager.play_snd_interface(sndPath)
+```
 	+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
 	
 #### Player SFX
-- ```SodaAudioManager.play_snd_player(sndPath)```
-	+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
+ ```
+  SodaAudioManager.play_snd_player(sndPath)
+ ```
+- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
 	
 ### Volume control
 To adjust the volume, simply change value the respective properties(The value type is **float** and will be used by the system as decibels.) :
