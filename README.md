@@ -25,13 +25,13 @@
 ```
 SodaAudioManager.play_music(sndPath, isLoop)
 ```
-- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-- ***isLoop*** defines whether the music will play in a loop or not; use true or false.
++ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
++ ***isLoop*** defines whether the music will play in a loop or not; use true or false.
 
 ```
 SodaAudioManager.pause_music()
 ```
--Pauses the music that is currently playing.
+- Pauses the music that is currently playing.
 
 ```
 SodaAudioManager.unpause_music()
