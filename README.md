@@ -8,7 +8,7 @@
 ### 1.Download
 
 - Download the plugin.
-- Extract the contents into the addons folder within your Godot project.
+- Extract the contents into your disc.
 
 ### 2.Install/Activate
 
