@@ -1,4 +1,4 @@
-# Soda AudioManager
+# Soda AudioManager 0.5
 *Plugin created and tested only on Godot 4.3.*
 
 #### Soda AudioManager is a global plugin developed for Godot, focused on managing non-spatial sounds such as interface sound effects, background music, and sounds from the main character. It provides an easy way to play sounds, control music and sound effect volumes globally, as well as define whether a music track should loop or not.
