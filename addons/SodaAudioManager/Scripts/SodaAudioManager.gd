@@ -23,7 +23,8 @@ signal fadein_finish;
 func _ready() -> void:
 	pass
 func _process(delta: float) -> void:
-	pass
+	if playerMusic.playing == false:
+		currentMusic = null;
 # ----------- SODA FUNCTIONS -----------
 #Music manager ------
 func play_music(sound_path: String, volume: float,loop: bool = false, fade_in = false, fade_duration: float = 2.0) -> void:
