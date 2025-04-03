@@ -21,7 +21,7 @@ signal fadein_finish;
 
 # ---------- GODOT FUNC ----------
 func _ready() -> void:
-	pass
+	playerMusic.connect("finished", current_null);
 func _process(delta: float) -> void:
 	pass
 # ----------- SODA FUNCTIONS -----------
@@ -46,6 +46,9 @@ func play_music(sound_path: String, volume: float,loop: bool = false, fade_in = 
 			emit_signal("music_start");
 	else:
 		print("--SAM-- ERROR: THE MUSIC FILE PATH IS INVALID!");
+
+func pause_music() -> void:
+	playerMusic.stream_paused = !playerMusic.stream_paused;
 
 #Interface SFX Manager -----
 func play_interface_sfx(sound_path: String, volume: float) -> void:
@@ -96,17 +99,11 @@ func stop_music(fade_out: bool = false, fade_duration: float = 2.0) -> void:
 		playerMusic.stop();
 		emit_signal("music_finish");
 
-func pause_music() -> void:
-	if playerMusic.playing == true:
-		playerMusic.stream_paused = true;
-	else:
-		playerMusic.stream_paused = false;
-
 func get_current_music():
+	if !currentMusic:
+		print("NOT CURRENT MUSIC")
 	return currentMusic;
-#---------- Soda Audio Manager ver 1.0 MIT liscense - Alexsander Oliveira de Almeida ----------
 
-
-func _on_player_music_finished() -> void:
+func current_null() -> void:
 	currentMusic = null;
-
+#---------- Soda Audio Manager ver 1.0 MIT liscense - Alexsander Oliveira de Almeida ----------
