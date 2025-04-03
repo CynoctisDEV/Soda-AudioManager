@@ -1,94 +1,112 @@
-#---------- Soda Audio Manager ver 0.5 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
+#---------- Soda Audio Manager ver 1.0 MIT liscense - Alexsander Oliveira de Almeida ----------
 extends Node
-
 # ----------- DECLARATIONS -----------
-#Variables for volume sound system -----------
-var musicVolume: float = 0.0 #Volume in Db for music
-var sfxInterfaceVolume: float = 0.0 #Volume in Db for interface SFX
-var sfxPlayerVolume: float = 0.0 #Volume in Db for player SFX
-var sfxAmbientVolume: float = 0.0 #Volume in Db for ambient sounds.
-
-#Variables for last sound(MUsic and ambience)
-var musicIsLoop: bool = false
-var ambientIsLoop: bool = false
-var lastMusic: String
-var lastAmbient: String
+#Variables
+var currentMusic: AudioStream = null;
+#Constants
+enum EFFECTS{FADE_IN, FADE_OUT};
 
 #Referencing AudioStreamPlayer Nodes ----------
-@export var sndMusic: AudioStreamPlayer
-@export var sndPlayer: AudioStreamPlayer
-@export var sndInterface: AudioStreamPlayer
-@export var sndAmbient: AudioStreamPlayer
+@onready var playerMusic: AudioStreamPlayer = $player_music;
+@onready var playerInterfaceSfx: AudioStreamPlayer = $player_sfx_interface;
+@onready var playerSfxContainer: Node = $player_sfx_container;
+@onready var effectsNode: Node =  $effectsNode;
+
+#Create Signals
+signal music_start;
+signal music_finish;
+signal interface_sfx_finish;
+signal sfx_finish;
+signal fadein_finish;
 
 # ---------- GODOT FUNC ----------
+func _ready() -> void:
+	pass
 func _process(delta: float) -> void:
-	#Here, it is defined that the volume of the nodes that play the audio will have the same value
-	#as the declared volume variables, so by changing these variables, the volume of the respective
-	#sounds will also change.
-	sndMusic.volume_db = musicVolume
-	sndInterface.volume_db = sfxInterfaceVolume
-	sndPlayer.volume_db = sfxPlayerVolume
-	sndAmbient.volume_db = sfxAmbientVolume
-	
+	pass
 # ----------- SODA FUNCTIONS -----------
 #Music manager ------
-func play_music(sndPath: String, isLoop: bool) -> void:
-	var snd = load(sndPath)
-	musicIsLoop = isLoop
-	if isLoop == true:
-		lastMusic = sndPath
+func play_music(sound_path: String, volume: float,loop: bool = false, fade_in = false, fade_duration: float = 2.0) -> void:
+	if sound_path != "" and sound_path is String:
+		var sound = load(sound_path);
+		#Avoid playing the same song or playing something null
+		if !sound or currentMusic == sound:
+			return
+		currentMusic = sound;
+		playerMusic.stream = sound;
+		playerMusic.volume_db = volume;
+		#Set loop
+		if sound is AudioStreamOggVorbis or sound is AudioStreamMP3:
+			sound.loop = loop;
+		#Use "fade_in" effect or play music immediately
+		if fade_in:
+			effectsNode.fade_in_effect(volume, fade_duration);
+		else:
+			playerMusic.play();
+			emit_signal("music_start");
 	else:
-		pass
-	sndMusic.stream = snd
-	sndMusic.play()
-	
-func pause_music() -> void:
-	sndMusic.stream_paused = true
+		print("--SAM-- ERROR: THE MUSIC FILE PATH IS INVALID!");
 
-func unpause_music() -> void:
-	sndMusic.stream_paused = false
-	
-func stop_music() -> void:
-	sndMusic.stop()
-	sndMusic.stream = null
-	
-#Ambient sounds manager -----
-func play_ambient_sound(sndPath, isLoop) -> void:
-	var snd = load(sndPath)
-	if isLoop == true:
-		lastAmbient = sndPath
-	else:
-		pass
-	sndAmbient.stream =  snd
-	sndAmbient.play()
-	
-func stop_ambient_sound() -> void:
-	sndAmbient.stop()
-	sndAmbient.stream = null
-	
-#Player SFX Manager -----
-func play_snd_player(sndPath) -> void:
-	var snd = load(sndPath)
-	sndPlayer.stream = snd
-	sndPlayer.play()
-	
 #Interface SFX Manager -----
-func play_snd_interface(sndPath) -> void:
-	var snd = load(sndPath)
-	sndInterface.stream = snd
-	sndInterface.play()
+func play_interface_sfx(sound_path: String, volume: float) -> void:
+	if sound_path != "" and sound_path is String:
+		#Load the file and play the sound.
+		var sound = load(sound_path);
+		if !sound:
+			return;
+		playerInterfaceSfx.stream = sound;
+		playerInterfaceSfx.volume_db = volume;
+		playerInterfaceSfx.play();
+		#When finished, empty the local variables.
+		await playerInterfaceSfx.finished;
+		playerInterfaceSfx.stop();
+		emit_signal("interface_sfx_finish")
+		playerInterfaceSfx.stream = null;
+		sound = null;
+	else:
+		print("--SAM-- ERROR: THE MUSIC FILE PATH IS INVALID!");
 	
-# ---------- SIGNALS RECEIVED FROM THE AUDIO NODES ----------
-func _on_snd_music_finished() -> void:
-	if musicIsLoop == true:
-		play_music(lastMusic, true)
+#General Sfx manager -----
+func play_sfx(sound_path, volume: float) -> void:
+	#creates a StreamPlayer, Loads the file and
+	#assigns it to the newly created StreamPlayer.
+	#if the sound finished, destroy node
+	if sound_path != "" and sound_path is String:
+		var sound = load(sound_path);
+		if !sound:
+			return;
+		var player_sfx = AudioStreamPlayer.new();
+		player_sfx.stream = sound;
+		player_sfx. volume_db = volume;
+		playerSfxContainer.add_child(player_sfx);
+		player_sfx.play();
+		#Auto remove node
+		await player_sfx.finished;
+		emit_signal("sfx_finish");
+		player_sfx.queue_free();
+		
 	else:
-		pass
+		print("--SAM-- ERROR: THE MUSIC FILE PATH IS INVALID!");
 
-func _on_snd_ambient_finished() -> void:
-	if ambientIsLoop == true:
-		play_ambient_sound(lastAmbient, true)
+#General manager -----
+func stop_music(fade_out: bool = false, fade_duration: float = 2.0) -> void:
+	if fade_out:
+		effectsNode.fade_out_effect(fade_duration);
 	else:
-		pass
+		playerMusic.stop();
+		emit_signal("music_finish");
 
-#---------- Soda Audio Manager ver 0.5 MIT liscense - 2024 - Alexsander Oliveira de Almeida ----------
+func pause_music() -> void:
+	if playerMusic.playing == true:
+		playerMusic.stream_paused = true;
+	else:
+		playerMusic.stream_paused = false;
+
+func get_current_music():
+	return currentMusic;
+#---------- Soda Audio Manager ver 1.0 MIT liscense - Alexsander Oliveira de Almeida ----------
+
+
+func _on_player_music_finished() -> void:
+	currentMusic = null;
+
