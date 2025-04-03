@@ -1,87 +1,103 @@
-# Soda AudioManager 0.5
-*Plugin created and tested only on Godot 4.3.*
+# Soda AudioManager 1.0
 
-#### Soda AudioManager is a global plugin developed for Godot, focused on managing non-spatial sounds such as interface sound effects, background music, and sounds from the main character. It provides an easy way to play sounds, control music and sound effect volumes globally, as well as define whether a music track should loop or not.
+*Plugin created and tested exclusively on Godot 4.3 and 4.4.*
 
-## ---------- Install ----------
+## Overview
 
-### 1.Download
+Soda AudioManager is a global plugin for Godot, designed to handle non-spatial sounds, including interface sound effects, background music, and general sound effects. It offers an easy way to manage audio playback, control volumes, apply sound effects, and configure looping.
 
-- Download the plugin.
-- Extract the contents into your disc.
+---
 
-### 2.Install/Activate
+## Installation
 
-- Copy the addons folder to your project.
-- Click on Project and look for the Plugins  tab in the Godot editor.
-- Check the box to activate the plugin.
+### Step 1: Download
 
-## ---------- How to use ----------
+- Download the plugin package.
+- Extract the contents to a local directory.
 
-### Functions:
-**To use the plugin, call the functions in your code whenever you need to play, stop, or pause an audio.**
+### Step 2: Install and Activate
 
-#### Music functions:
+1. Copy the `addons` folder to your project’s root directory.
+2. Open your Godot project.
+3. Go to **Project -> Project Settings -> Plugins**.
+4. Locate the "SodaAudioManager" plugin and enable it by checking the box.
+
+---
+
+## Usage Guide
+
+To use the plugin, call its functions in your scripts whenever you need to play, stop, or pause audio.
+
+### Music Functions
+
+```gdscript
+SodaAudioManager.play_music(sound_path: String, volume: float, loop: bool, fade_in = false, fade_duration: float = 2.0)
 ```
-SodaAudioManager.play_music(sndPath, isLoop)
-```
-+ ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-+ ***isLoop*** defines whether the music will play in a loop or not; use true or false.
 
-```
+*Plays background music from a specified file.*
+
+- **sound\_path:** Path to the audio file as a string (e.g., "res\://path/to/music.ogg").
+- **volume:** Float value between 0.0 and 1.0 to set the volume.
+- **loop:** Determines if the music loops (true/false). Only .ogg and .mp3 formats support looping; .wav files are not supported.
+- **fade\_in:** Enables a fade-in effect when starting the audio.
+- **fade\_duration:** Sets the fade-in duration in seconds (default is 2.0).
+
+```gdscript
 SodaAudioManager.pause_music()
 ```
-- Pauses the music that is currently playing.
 
-```
-SodaAudioManager.unpause_music()
-```
-- Resumes the music that was playing and was paused earlier.
+*Pauses or resumes the currently playing music.*
 
+```gdscript
+SodaAudioManager.stop_music(fade_out: bool, fade_duration: float = 2.0)
 ```
-SodaAudioManager.stop_music()
-```
-- Stop music that is currently playing.
-	
-#### Ambient Sound Functions
-```
-SodaAudioManager.play_ambient_sound(sndPath, isLoop)
-```
-- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-- ***isLoop*** defines whether the music will play in a loop or not; use true or false.
-	
-```
-SodaAudioManager.stop_ambient_sound()
-```
-- Stop Ambient audio that is currently playing.
+
+*Stops the currently playing music.*
+
+- **fade\_out:** If true, applies a fade-out effect before stopping.
+- **fade\_duration:** Sets the fade-out duration in seconds (default is 2.0).
+
+### Sound Effects (SFX)
 
 #### Interface SFX
+
+```gdscript
+SodaAudioManager.play_interface_sfx(sound_path: String, volume: float)
 ```
-SodaAudioManager.play_snd_interface(sndPath)
+
+*Plays interface sound effects.*
+
+- **sound\_path:** Path to the audio file as a string.
+- **volume:** Float value between 0.0 and 1.0 to set the volume.
+
+#### General SFX
+
+```gdscript
+SodaAudioManager.play_sfx(sound_path: String, volume: float)
 ```
-- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-	
-#### Player SFX
- ```
-  SodaAudioManager.play_snd_player(sndPath)
- ```
-- ***sndPath*** refers to the path of the audio in your project; it is treated as a string, so enclose it in quotation marks.
-	
-### Volume control
-To adjust the volume, simply change value the respective properties(The value type is **float** and will be used by the system as decibels.) :
 
-- musicVolume
-- sfxInterfaceVolume
-- sfxPlayerVolume
-- sfxAmbientVolume
+*Plays general sound effects.*
 
-Here's an example:
-``` 
-SodaAudioManager.musicVolume = 2
+- **sound\_path:** Path to the audio file as a string.
+- **volume:** Float value between 0.0 and 1.0 to set the volume.
+
+---
+
+## Tips for Integration
+
+If your game uses a configuration system with settings stored in a file, integrating it with `SodaAudioManager` is simple. When calling audio methods, pass the volume from your global configuration node:
+
+**Example:**
+
+```gdscript
+SodaAudioManager.play_music("res://music.ogg", GlobalConfig.volume)
 ```
-In this example, musicVolume is set to 2 Db. Adjust the value according to your needs.The change will be applied in real-time.
 
-## ---------- Tips ----------
-If you have a settings system in your game where the configurations are stored in a file, integrating it with SodaAudioManager is quite simple. When loading the values, just apply them to the respective properties of the plugin, just as shown earlier.
+This ensures consistency with your game’s audio settings.
 
-***Questions, suggestions, and discussions to improve this project are all welcome! Feel free to comment!***
+---
+
+## Feedback and Contributions
+
+Questions, suggestions, and contributions to improve this plugin are always welcome! Feel free to open discussions and submit issues or pull requests on GitHub!
+
