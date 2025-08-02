@@ -36,58 +36,51 @@ To use the plugin, call its functions in your scripts whenever you need to play,
 
 ### Music Functions
 
+**play music()**
 ```gdscript
 SodaAudioManager.play_music(soundPath: String, loop: bool, fade: bool = false, fade_duration: float = 1.0)
 ```
-
 *Plays background music from a specified file.*
-
 - **soundPath:** Path to the audio file as a string (e.g., "res\://path/to/music.ogg").
 - **loop:** Determines if the music loops (true/false). Only .ogg and .mp3 formats support looping; .wav files are not supported.
 - **fade:** Enables a fade-in effect when starting the audio.
 - **fade_duration:** Sets the fade-in duration in seconds (default is 1.0).
 
+**pause_music()**
 ```gdscript
 SodaAudioManager.pause_play_music()
 ```
-
 *Pauses or resumes the currently playing music.*
 
+**stop_music()**
 ```gdscript
 SodaAudioManager.stop_music(fade: bool, fade_duration: float = 1.0)
 ```
-
 *Stops the currently playing music.*
-
 - **fade:** If true, applies a fade-out effect before stopping.
 - **fade_duration:** Sets the fade-out duration in seconds (default is 1.0).
 
 ### Sound Effects (SFX)
 
-#### Interface SFX
-
+**play_ui_sfx()**
 ```gdscript
 SodaAudioManager.play_ui_sfx(soundPath: String)
 ```
-
 *Plays interface sound effects.*
-
 - **soundPath:** Path to the audio file as a string.
 
-#### General SFX
+**play_sfx()**
 
 ```gdscript
 SodaAudioManager.play_sfx(soundPath: String)
 ```
-
 *Plays general sound effects.*
-
 - **soundPath:** Path to the audio file as a string.
 
+**update_volume()**
 ```gdscript
 SodaAudioManager.update_volume(MusicVolumeGlobal: float, sfxUiVolumeGlobal: float, sfxVolumeGlobal: float)
 ```
-
 *Updates the volume of the plugin's audio players.*
 
 ---
