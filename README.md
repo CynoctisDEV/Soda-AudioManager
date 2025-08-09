@@ -46,7 +46,7 @@ SodaAudioManager.play_music(soundPath: String, loop: bool, fade: bool = false, f
 - **fade:** Enables a fade-in effect when starting the audio.
 - **fade_duration:** Sets the fade-in duration in seconds (default is 1.0).
 
-**pause_music()**
+**pause_play_music()**
 ```gdscript
 SodaAudioManager.pause_play_music()
 ```
